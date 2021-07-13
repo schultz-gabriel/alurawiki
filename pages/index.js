@@ -22,7 +22,7 @@ export default function Home() {
     'ikyrie',
     'Garoze',
     'rafaballerini',
-    'JulianaAmoasei',
+    'leonardonegrao',
     'Eddart157'
   ]
 
