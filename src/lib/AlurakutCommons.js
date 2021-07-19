@@ -24,10 +24,11 @@ export function AlurakutMenu({ githubUser }) {
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
-        <AlurakutMenu.Logo src={`${BASE_URL}/logo.svg`} />
-
+        <Link href="/">
+        <AlurakutMenu.Logo src={`https://i.imgur.com/N0Ve4yc.png`} />
+        </Link>
         <nav style={{ flex: 1 }}>
-          {[{ name: 'Inicio', slug: '/'}, {name: 'Amigos', slug: '/amigos'}, {name: 'Comunidades', slug: '/comunidades'}].map((menuItem) => (
+          {[{ name: 'Inicio', slug: '/'}, {name: 'Libs e Frameworks', slug: '/libs'}, {name: 'Dicas de estudo', slug: '/links'}].map((menuItem) => (
             <Link key={`key__${menuItem.name.toLocaleLowerCase()}`} href={`${menuItem.slug.toLocaleLowerCase()}`}>
               {menuItem.name}
             </Link>
@@ -54,9 +55,11 @@ export function AlurakutMenu({ githubUser }) {
 }
 AlurakutMenu.Wrapper = styled.header`
   width: 100%;
-  background-color: #308BC5;
+  background-color: #62388b;
+
   .alurakutMenuProfileSidebar {
-    background: white;
+    overflow-y: scroll;
+    background: #333333;
     position: fixed;
     z-index: 100;
     padding: 46px;
@@ -93,7 +96,7 @@ AlurakutMenu.Wrapper = styled.header`
     }
   }
   .container {
-    background-color: #308BC5;
+    background-color: #62388b;
     padding: 7px 16px;
     max-width: 1110px;
     margin: auto;
@@ -140,7 +143,7 @@ AlurakutMenu.Wrapper = styled.header`
     }
     input {
       color: #ffffff;
-      background: #5579A1;
+      background: #333;
       padding: 10px 42px;
       border: 0;
       background-image: url(${`${BASE_URL}/icons/search.svg`});
@@ -153,23 +156,25 @@ AlurakutMenu.Wrapper = styled.header`
         opacity: 1;
       }
     } 
+
   }
 `;
 AlurakutMenu.Logo = styled.img`
-  background-color: #ffffff;
-  padding: 9px 14px;
+  background-color: #333;
+  padding: 2px 10px;
   border-radius: 1000px;
   height: 34px;
+  border: 2px solid #DAA520;
 `;
 
-function AlurakutMenuProfileSidebar({ githubUser }) {
+function AlurakutMenuProfileSidebar({githubUser}) {
   return (
     <div className="alurakutMenuProfileSidebar">
       <div>
         <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px' }} />
         <hr />
         <p>
-          <a className="boxLink" href={`/user/${githubUser}`}>
+          <a className="boxLink" href={`https://github.com/${githubUser}`}>
             @{githubUser}
           </a>
         </p>
@@ -188,33 +193,33 @@ export function AlurakutProfileSidebarMenuDefault() {
   return (
     <AlurakutProfileSidebarMenuDefault.Wrapper>
       <nav>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/user.svg`} />
-            Perfil
-          </a>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/book.svg`} />
-            Recados
-          </a>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/camera.svg`} />
-            Fotos
-          </a>
-        <a href="/">
-          <img src={`${BASE_URL}/icons/sun.svg`} />
-            Depoimentos
-          </a>
+        <Link href="/youtube">
+          <img src="https://i.imgur.com/Sc9n3Wb.png" />
+            Alura no YouTube
+          </Link>
+        <Link href="/hipsters">
+          <img src="https://i.imgur.com/iiAJ1B9.png" />
+            Hipster.tech
+          </Link>
+        {/* <Link href="/">
+          <img src="https://i.imgur.com/WLBaLET.png" />
+            Equipe educacional
+          </Link> */}
+        <Link href="/alura">
+          <img src="https://i.imgur.com/PdefBt8.png" />
+            Mergulhe em tec
+          </Link>
       </nav>
       <hr />
       <nav>
-        <a href="/">
+        <a target="_blank" href="https://github.com/trending">
           <img src={`${BASE_URL}/icons/plus.svg`} />
             GitHub Trends
           </a>
-        <a href="/logout">
+        <Link href="/login">
           <img src={`${BASE_URL}//icons/logout.svg`} />
             Sair
-          </a>
+          </Link>
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
   )
@@ -321,17 +326,17 @@ OrkutNostalgicIconSet.List = styled.ul`
 const AlurakutLoginScreen = css`
   :root {
     --backgroundPrimary: #D9E6F6;
-    --backgroundSecondary: #F1F9FE;
-    --backgroundTertiary: #FFFFFF;
-    --backgroundQuarternary: #BBCDE8;
-    --colorPrimary: #2E7BB4;
+    --backgroundSecondary: #62388b;
+    --backgroundTertiary: #333;
+    --backgroundQuarternary: #333;
+    --colorPrimary: #f1af09;
     --colorSecondary: #388BB0;
     --colorTertiary: #2F4A71;
     --colorQuarternary: #D81D99;
     --textPrimaryColor: #333333;
-    --textSecondaryColor: #FFFFFF;
-    --textTertiaryColor: #5A5A5A;
-    --textQuarternaryColor: #C5C6CA;
+    --textSecondaryColor: #000000;
+    --textTertiaryColor: #111;
+    --textQuarternaryColor: #000000;
     --commonRadius: 8px;
   }
   .loginScreen {
@@ -364,6 +369,7 @@ const AlurakutLoginScreen = css`
       justify-content: center;
       align-items: center;
       min-height: 263px;
+      color: #dcdcdc;
       @media(min-width: 860px) {
         min-height: 368px;
       }
@@ -378,7 +384,7 @@ const AlurakutLoginScreen = css`
         }
       }
       img {
-        max-height: 45px;
+        max-height: 70px;
         margin-bottom: 36px;
       }
     }
@@ -417,6 +423,7 @@ const AlurakutLoginScreen = css`
         }
         input {
           width: 100%;
+          color: #ffffff;
           display: block;
           border: 1px solid var(--textQuarternaryColor);
           padding: 12px;

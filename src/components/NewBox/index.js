@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
 export const Box = styled.div`
-  background: #FFFFFF;
+  background: #222;
   border-radius: 8px;
   padding: 16px;
   /* CSS Pré-Pronto */
   margin-bottom: 10px;
+  color: white;
+
   .boxLink {
     font-size: 14px;
-    color: #2E7BB4;
+    color: white;
     text-decoration: none;
     font-weight: 800;
   }
@@ -21,12 +23,14 @@ export const Box = styled.div`
     font-size: 18px;
     font-weight: 400;
     margin-bottom: 20px;
+    color: white;
+
   }
   .smallTitle {
     margin-bottom: 20px;
     font-size: 16px;
     font-weight: 700;
-    color: #333333;
+    color: #ffffff;
     margin-bottom: 20px;
   }
   hr {
@@ -54,6 +58,9 @@ export const Box = styled.div`
     color: #FFFFFF;
     border-radius: 10000px;
     background-color: #6F92BB;
+  }
+  p{
+    text-align:justify;
   }
 `; 
 

@@ -6,11 +6,16 @@ const MainGrid = styled.main`
   margin-right: auto;
   max-width: 500px;
   padding: 16px;
+  .alura__title{
+    color: white;
   .profileArea {
     display: none;
+    
     @media(min-width: 860px) {
       display: block;
     }
+    
+}
   }
   @media(min-width: 860px) {
     max-width: 1110px;

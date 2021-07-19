@@ -1,7 +1,10 @@
 import React from 'react';
+import nookies from 'nookies';
+import jwt from 'jsonwebtoken';
 import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/NewBox';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
+import {PostArea} from '../src/components/PostArea';
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
 
 
@@ -24,46 +27,30 @@ function ProfileSidebar(propriedades) {
   )
 }
 
-export default function Home() {
+function ProfileRelationsBox(propriedades) {
+  return (
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {propriedades.title} ({propriedades.items.length})
+      </h2>
+      <ul>
+        {propriedades.items.slice(0,6).map((itemAtual) => {
+          return (
+            <li key={itemAtual.id}>
+              <a target='_blank' href={`https://github.com/${itemAtual.login}`}>
+                <img src={itemAtual.avatar_url} />
+                <span>{itemAtual.login}</span>
+               </a>
+            </li>
+          )            
+  })}
+      </ul>
+    </ProfileRelationsBoxWrapper>  
+  )
+}
 
-  
-  const usuarioAleatorio = 'SchultzGabriel';
-  const [comunidades, setComunidades] = React.useState([{
-    key: '12802378123789378912789789123896123', 
-    title: 'Em busca do Zoom Master',
-    image: 'https://i.ytimg.com/vi/mGXPon0H-Ks/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLBmlvM_7wBEjenQs_IwFvrSYUXitg',
-    link: 'https://www.youtube.com/channel/UCzR2u5RWXWjUh7CwLSvbitA'
-  },{
-    key: '12802378123789376782789789123896123', 
-    title: 'Senhor dos Anéis',
-    image: 'https://ovicio.com.br/wp-content/uploads/2020/07/20200730-the-lord-of-the-rings-cinematic-universe-1227689-277x277.jpeg',
-    link: 'https://www.youtube.com/channel/UCZTlOgWItTp2_dGQD_9PSSw'
-  },{
-    key: '12802378123789378912789789128766123', 
-    title: 'Canal da Rafa Balle',
-    image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9YQ3AAvNl7ShYo0zYboRAXaDMS_7J5CqDhg&usqp=CAU',
-    link: 'https://beacons.ai/rafaballerini'
-  },{
-    key: '12802542123789378912789789128766123', 
-    title: 'Atormentadores do ScubaTeam',
-    image: 'https://i.redd.it/ovmgcxcmu5u61.jpg',
-    link: 'https://www.instagram.com/aluraonline/?hl=pt-br'
-  },{
-    key: '12802378123789378912789789000766123', 
-    title: 'Futuros Programadores',
-    image: 'https://memegenerator.net/img/instances/66862157.jpg',
-    link: 'https://www.youtube.com/channel/UCZTlOgWItTp2_dGQD_9PSSw'
-  },{
-    key: '12802378123459378912789789128766123', 
-    title: 'Eu Odeio os Ratos Fumantes',
-    image: 'https://pbs.twimg.com/media/Dj_212yXcAASV0a.jpg',
-    link: 'https://www.facebook.com/ratosnaopodemfumar/'
-  },
-]);
-  // const comunidades = comunidades[0];
-  // const alteradorDeComunidades/setComunidades = comunidades[1];
-
-  // const comunidades = ['Alurakut'];
+export default function Home(props) {
+  const usuarioAleatorio = props.githubUser;
   const pessoasFavoritas = [
     'mateushenrique-dev',
     'ikyrie',
@@ -72,10 +59,55 @@ export default function Home() {
     'leonardonegrao',
     'Eddart157'
   ]
+  
+
+  const [seguidores, setSeguidores] = React.useState([]);
+  const [posts, setPosts] = React.useState([]);
+
+  // 0 - Pegar o array de dados do github 
+  React.useEffect(function() {
+    fetch(`https://api.github.com/users/${usuarioAleatorio}/followers`)
+    .then(function (respostaDoServidor) {
+      return respostaDoServidor.json();
+    })
+    .then(function(respostaCompleta) {
+      setSeguidores(respostaCompleta);
+    })
+  }, [])
+
+  //  API GraphQL
+  //  fetch('https://graphql.datocms.com/', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Authorization': '9bcb177f6095be872305166c56b04b',
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //   },
+  //   body: JSON.stringify({ "query": `query {
+  //     allPosts {
+  //       id
+  //       content
+  //       image
+  //       link
+  //       user
+  //     }
+  //   }` })
+  // })
+  // .then((response) => response.json()) // Pega o retorno do response.json() e já retorna
+  // .then((respostaCompleta) => {
+  //   const postsVindosDoDato = respostaCompleta.data.allPosts;
+  //   setPosts(postsVindosDoDato)
+  // })
+  
+
+
+
+  // 1 - Criar um box que vai ter um map, baseado nos items do array
+  // que pegamos do GitHub
 
   return (
     <>
-      <AlurakutMenu />
+      <AlurakutMenu githubUser={ usuarioAleatorio }/>
       <MainGrid>
         {/* <Box style="grid-area: profileArea;"> */}
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
@@ -90,77 +122,130 @@ export default function Home() {
             <OrkutNostalgicIconSet />
           </Box>
           <Box>
-            <h2 className="subTitle">O que você deseja fazer?</h2>
-            <form onSubmit={function handleCriaComunidade(e) {
+            <h2 className="subTitle">Que tal contribuir com um post? :)</h2>
+            <form onSubmit={function handleCriaPost(e) {
                 e.preventDefault();
                 const dadosDoForm = new FormData(e.target);
 
-                const comunidade = {
-                  id: new Date().toISOString(),
-                  title: dadosDoForm.get('title'),
-                  image: dadosDoForm.get('image') || 'https://picsum.photos/200',
-                  link: dadosDoForm.get('link'),
+                const setPost = {
+                  'user': usuarioAleatorio,
+                  'content':dadosDoForm.get('content'),
+                  'image': dadosDoForm.get('image'),
+                  'link':dadosDoForm.get('link')
                 }
-                const comunidadesAtualizadas = [...comunidades, comunidade];
-                setComunidades(comunidadesAtualizadas)
+                fetch('/api/posts', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(setPost)
+                })
+                .then(async (response) => {
+                  const dados = await response.json();
+                  const post = dados.registroCriado;
+                  const postsAtualizados = [...posts, post];
+                  setPosts(postsAtualizados)
+                  alert('Obrigado pela sua contribuição! Os moderadores já estão analizando seu post.')
+                })
             }}>
               <div>
                 <input
-                  placeholder="Qual vai ser o nome da sua comunidade?"
-                  name="title"
-                  aria-label="Qual vai ser o nome da sua comunidade?"
-                  type="text"
-                  />
-              </div>
-              <div>
-                <input
-                  placeholder="Coloque uma URL para usarmos de capa"
-                  name="image"
-                  aria-label="Coloque uma URL para usarmos de capa"
+                  placeholder="Diga-nos o que você acha importante."
+                  name="content"
+                  aria-label="Diga-nos o que você acha importante."
                 />
               </div>
               <div>
                 <input
-                  placeholder="Coloque uma URL para direcionarmos o link"
+                  placeholder="(opcional) ilustre seu post com uma imagem"
+                  name="image"
+                  aria-label="(opcional) ilustre seu post com uma imagem"
+                />
+              </div>
+              <div>
+                <input
+                  placeholder="Insira uma URL para direcionarmos o link"
                   name="link"
-                  aria-label="Coloque uma URL para direcionarmos o link"
+                  aria-label="Insira uma URL para direcionarmos o link"
                 />
               </div>
 
               <button>
-                Criar comunidade
+                Postar
               </button>
             </form>
           </Box>
-        </div>
-        <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
 
-          <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle">
-              Comunidades ({comunidades.length})
-            </h2>
+
             <ul>
-              {comunidades.map((itemAtual) => {
+              {posts.map((itemAtual) => {
+                
                 return (
-                  <li key={itemAtual.key}>
-                    <a href={`${itemAtual.link}`}>
-                      <img src={itemAtual.image} />
-                      <span>{itemAtual.title}</span>
-                    </a>
+                  <PostArea key={itemAtual.id}>
+                  <li >
+                    <div className="post__op">
+                    <a className="post__op--link" target="_blank" href={`https://github.com/${itemAtual.user}`}>
+                    <img className="post__op--icon" src={`https://github.com/${itemAtual.user}.png`} />                     
+                     <h2 className="post__op--nick">{itemAtual.user}</h2>
+                      </a>
+
+                    </div>
+                  <p className="post__content">{itemAtual.content}</p>
+                  <a className="post__link" target="_blank" href={itemAtual.link}>Para saber mais</a>
+                      <img className="post__image" src={itemAtual.image} />
                   </li>
+                  </PostArea>
                 )
               })}
+              <PostArea>
+                  <li >
+                    <div className="post__op">
+                    <a className="post__op--link" target="_blank" href={`https://github.com/SchultzGabriel`}>
+                    <img className="post__op--icon" src={`https://github.com/SchultzGabriel.png`} />                     
+                     <h2 className="post__op--nick">SchultzGabriel</h2>
+                      </a>
+
+                    </div>
+                  <p className="post__content">A coisa mais legal que aprendi estudando desenvolvimento foi trabalhar com flexbox. Além de divertido, te dá super poderes!</p>
+                  <a className="post__link" target="_blank" href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/">Para saber mais</a>
+                      <img className="post__image" src="https://www.bitdegree.org/learn/storage/media/images/661999ba-c216-4c71-b959-82f878309730.o.png" />
+                  </li>
+                  </PostArea>
+                  <PostArea>
+                  <li >
+                    <div className="post__op">
+                    <a className="post__op--link" target="_blank" href={`https://github.com/SchultzGabriel`}>
+                    <img className="post__op--icon" src={`https://github.com/SchultzGabriel.png`} />                     
+                     <h2 className="post__op--nick">SchultzGabriel</h2>
+                      </a>
+
+                    </div>
+                  <p className="post__content">Dentre os vários conhecimentos valiosos dessa imersão, os ifs ternários foram surpreendentemente assustadores mas surpreendentemente lindos de se usar depois de aprendidos.</p>
+                  <a className="post__link" target="_blank" href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Operators/Conditional_Operator">Para saber mais</a>
+                      <img className="post__image" src="https://miro.medium.com/max/1838/1*wSgzVAgKIfFmW6FtULRVOA.png" />
+                  </li>
+                  </PostArea>
             </ul>
-          </ProfileRelationsBoxWrapper>
+
+        </div>
+
+
+
+        <div className="profileRelationsArea" style={{ gridArea: 'profileRelationsArea' }}>
+
+
+        <ProfileRelationsBox title="Seguidores" items={seguidores} />
+
+
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
               Pessoas da comunidade ({pessoasFavoritas.length})
             </h2>
             <ul>
-              {pessoasFavoritas.map((itemAtual) => {
+              {pessoasFavoritas.slice(0,6).map((itemAtual) => {
                 return (
-                  <li>
-                    <a href={`/users/${itemAtual}`} key={itemAtual}>
+                  <li key={itemAtual}>
+                    <a target='_blank' href={`https://github.com/${itemAtual}`} >
                       <img src={`https://github.com/${itemAtual}.png`} />
                       <span>{itemAtual}</span>
                     </a>
@@ -174,3 +259,30 @@ export default function Home() {
     </>
   )
 }
+
+export async function getServerSideProps(context) {
+  const cookies = nookies.get(context)
+  const token = cookies.USER_TOKEN;
+  const { isAuthenticated } = await fetch('https://alurakut.vercel.app/api/auth', {
+    headers: {
+        Authorization: token
+      }
+  })
+  .then((resposta) => resposta.json())
+
+  if(!isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      }
+    }
+  }
+
+  const { githubUser } = jwt.decode(token);
+  return {
+    props: {
+      githubUser
+    }, // will be passed to the page component as props
+  }
+} 
