@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import NextLink from 'next/link';
 
+
 const BASE_URL = 'http://alurakut.vercel.app/';
 const v = '1';
 
@@ -36,7 +37,8 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>
+        {/* href={`/login`} */}
+          <a>
             Sair
           </a>
           <div>
@@ -58,6 +60,8 @@ AlurakutMenu.Wrapper = styled.header`
   background-color: #62388b;
 
   .alurakutMenuProfileSidebar {
+    display: flex;
+    align-items: center;
     overflow-y: scroll;
     background: #333333;
     position: fixed;
@@ -174,7 +178,7 @@ function AlurakutMenuProfileSidebar({githubUser}) {
         <img src={`https://github.com/${githubUser}.png`} style={{ borderRadius: '8px' }} />
         <hr />
         <p>
-          <a className="boxLink" href={`https://github.com/${githubUser}`}>
+          <a target="_blank" className="boxLink" href={`https://github.com/${githubUser}`}>
             @{githubUser}
           </a>
         </p>
@@ -225,6 +229,7 @@ export function AlurakutProfileSidebarMenuDefault() {
   )
 }
 AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
+
   a {
     font-size: 12px;
     color: #2E7BB4;

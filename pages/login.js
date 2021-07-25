@@ -3,6 +3,8 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 
+
+
 export default function LoginScreen() {
   const router = useRouter();
   const [githubUser, setGithubUser] = React.useState('');
@@ -69,7 +71,7 @@ export default function LoginScreen() {
 
         <footer className="footerArea">
           <p>
-            © 2021 alura.com.br - <a target="_blank" href="https://github.com/topics/alurakut">Outros projetos da Imersão</a> - <a target="_blank" href="https://www.alura.com.br/">Mergulhe em tecnologia</a> - <a target="_blank" href="/">Privacidade</a> - <a target="_blank" href="/">Termos</a> - <a target="_blank" href="/">Contato</a>
+            © 2021 alura.com.br - <a target="_blank" href="https://github.com/topics/alurakut">Outros projetos da Imersão</a> - <a target="_blank" href="https://www.alura.com.br/">Mergulhe em tecnologia</a>
           </p>
         </footer>
       </div>

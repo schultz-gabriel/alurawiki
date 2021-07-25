@@ -5,13 +5,14 @@ import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/NewBox';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 import {ItemBox} from '../src/components/ItemBox';
-import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
+import { AlurakutMenu, AlurakutProfileSidebarMenuDefault } from '../src/lib/AlurakutCommons';
+import {AsideBox} from '../src/components/AsideBox'
 
 
 
 function ProfileSidebar(propriedades) {
     return (
-      <Box as="aside">
+      <AsideBox as="aside">
         <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }} />
         <hr />
         <p>
@@ -22,7 +23,7 @@ function ProfileSidebar(propriedades) {
         <hr />
   
         <AlurakutProfileSidebarMenuDefault />
-      </Box>
+      </AsideBox>
     )
   }
 
@@ -51,12 +52,12 @@ function ProfileSidebar(propriedades) {
 export default function Libs(props) {
     const usuarioAleatorio = props.githubUser;
     const pessoasFavoritas = [
-      'mateushenrique-dev',
-      'ikyrie',
-      'Garoze',
-      'rafaballerini',
-      'leonardonegrao',
-      'Eddart157'
+      'peas',
+    'omariosouto',
+    'juunegreiros',
+    'guilhermesilveira',
+    'rafaballerini',
+    'SchultzGabriel'
     ]
 
     const [seguidores, setSeguidores] = React.useState([]);
@@ -113,7 +114,7 @@ export default function Libs(props) {
             </div>
             </ItemBox>
             <ItemBox>
-                    <img src="https://lh3.googleusercontent.com/proxy/vhsYydP8OFqYLIVyeskHBXOC1ac-fz5gzBUponKPlU7F6QjhtS5WgeehsvSNBAhNWL9L_5ThB01LUMxzzWw_yikVcP18tAb6"></img>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e5/Crystal_Project_cookie.png"></img>
                     <div>
                 <h2>Nookies</h2>
             <p>Outra ferramenta incrível, o <a target="_blank" href="https://www.npmjs.com/package/nookies">Nookies</a> nos possibilita trabalhar com cookies, pequenos dados temporários em nosso navegador que são são uma mão na roda em vários momentos do funcionamento da nossa aplicação. Use com responsabilidade!</p>
@@ -133,12 +134,6 @@ export default function Libs(props) {
             <p>Um forte aliado dos devs atualmente, o <a target="_blank" href="https://babeljs.io/">Babel</a> é um transcompilador que altera nosso código JS para versões mais antigas compatíveis com o maior número de navegadores possível. Essa ferramente expandirá e muito os seus horizontes, não hesite em usá-la!</p>
             </div>
             </ItemBox>
-
-
-              
-              
-
-
               </div>
 
 
@@ -147,7 +142,7 @@ export default function Libs(props) {
         <ProfileRelationsBox title="Seguidores" items={seguidores} />
         <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
-              Pessoas da comunidade ({pessoasFavoritas.length})
+            Alura no GitHub
             </h2>
             <ul>
               {pessoasFavoritas.slice(0,6).map((itemAtual) => {

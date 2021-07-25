@@ -6,12 +6,13 @@ import Box from '../src/components/NewBox';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 import {ItemBox} from '../src/components/ItemBox';
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
+import {AsideBox} from '../src/components/AsideBox'
 
 
 
 function ProfileSidebar(propriedades) {
     return (
-      <Box as="aside">
+      <AsideBox as="aside">
         <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }} />
         <hr />
         <p>
@@ -22,7 +23,7 @@ function ProfileSidebar(propriedades) {
         <hr />
   
         <AlurakutProfileSidebarMenuDefault />
-      </Box>
+      </AsideBox>
     )
   }
 
@@ -51,12 +52,12 @@ function ProfileSidebar(propriedades) {
 export default function Alura(props) {
     const usuarioAleatorio = props.githubUser;
     const pessoasFavoritas = [
-      'mateushenrique-dev',
-      'ikyrie',
-      'Garoze',
-      'rafaballerini',
-      'leonardonegrao',
-      'Eddart157'
+      'peas',
+    'omariosouto',
+    'juunegreiros',
+    'guilhermesilveira',
+    'rafaballerini',
+    'SchultzGabriel'
     ]
 
     const [seguidores, setSeguidores] = React.useState([]);
@@ -176,7 +177,7 @@ export default function Alura(props) {
         <ProfileRelationsBox title="Seguidores" items={seguidores} />
         <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
-              Pessoas da comunidade ({pessoasFavoritas.length})
+            Alura no GitHub
             </h2>
             <ul>
               {pessoasFavoritas.slice(0,6).map((itemAtual) => {

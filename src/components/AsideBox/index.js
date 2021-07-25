@@ -1,16 +1,18 @@
 import styled from 'styled-components';
+import Box from '../NewBox';
 
-export const Box = styled.div`
-  background: #222;
+export const AsideBox = styled(Box)`
+background: #222222;
   border-radius: 8px;
   padding: 16px;
-  /* CSS Pré-Pronto */
   margin-bottom: 10px;
   color: white;
   display: flex;
   flex-direction: column;
 
-  
+  @media screen and (max-width:859px){
+      display:none;
+  }
 
   .boxLink {
     font-size: 14px;
@@ -67,5 +69,3 @@ export const Box = styled.div`
     text-align:justify;
   }
 `; 
-
-export default Box 

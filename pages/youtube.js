@@ -6,12 +6,13 @@ import Box from '../src/components/NewBox';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 import { ItemBox } from '../src/components/ItemBox';
 import { AlurakutMenu, AlurakutProfileSidebarMenuDefault } from '../src/lib/AlurakutCommons';
+import {AsideBox} from '../src/components/AsideBox'
 
 
 
 function ProfileSidebar(propriedades) {
   return (
-    <Box as="aside">
+    <AsideBox as="aside">
       <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }} />
       <hr />
       <p>
@@ -22,7 +23,7 @@ function ProfileSidebar(propriedades) {
       <hr />
 
       <AlurakutProfileSidebarMenuDefault />
-    </Box>
+    </AsideBox>
   )
 }
 
@@ -51,12 +52,12 @@ function ProfileRelationsBox(propriedades) {
 export default function Hipsters(props) {
   const usuarioAleatorio = props.githubUser;
   const pessoasFavoritas = [
-    'mateushenrique-dev',
-    'ikyrie',
-    'Garoze',
+    'peas',
+    'omariosouto',
+    'juunegreiros',
+    'guilhermesilveira',
     'rafaballerini',
-    'leonardonegrao',
-    'Eddart157'
+    'SchultzGabriel'
   ]
 
   const [seguidores, setSeguidores] = React.useState([]);
@@ -93,7 +94,7 @@ export default function Hipsters(props) {
             <a className="alura__youtube_content" target="_blank" href="https://www.youtube.com/user/aluracursosonline">
               <div>
                 <img className="alura__youtube_image" src="https://yt3.ggpht.com/ytc/AKedOLRszi3O39AB5-uw_1jkrxJppwegjToBgIKFIOqiiA=s900-c-k-c0x00ffffff-no-rj"></img>
-                <h2>Canalda Alura</h2>
+                <h2>Canal da Alura</h2>
               </div>
             </a>
             <a className="alura__youtube_content" target="_blank" href="https://www.youtube.com/channel/UCzR2u5RWXWjUh7CwLSvbitA">
@@ -141,7 +142,14 @@ export default function Hipsters(props) {
               <h2>Guilherme Lima</h2>
             </div>
               </a>
+              <a className="alura__youtube_content" target="_blank" href="https://www.youtube.com/channel/UCU5JicSrEM5A63jkJ2QvGYw">
+            <div>
+            <img className="alura__youtube_image" src="https://yt3.ggpht.com/ytc/AKedOLTnTjoDN70zAxQqnSOBfj9RxVQ5H0HMZXciBQHY=s900-c-k-c0x00ffffff-no-rj"></img>
+              <h2>F. Deschamps</h2>
+            </div>
+              </a>
               </div>
+
           </ItemBox>
 
 
@@ -154,7 +162,7 @@ export default function Hipsters(props) {
           <ProfileRelationsBox title="Seguidores" items={seguidores} />
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
-              Pessoas da comunidade ({pessoasFavoritas.length})
+            Alura no GitHub
             </h2>
             <ul>
               {pessoasFavoritas.slice(0, 6).map((itemAtual) => {

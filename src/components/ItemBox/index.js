@@ -3,6 +3,7 @@ import Box from '../NewBox';
 
 export const ItemBox = styled(Box)`
 display:flex;
+flex-direction:row;
 align-items: center;
 
 div{

@@ -5,14 +5,14 @@ import MainGrid from '../src/components/MainGrid';
 import Box from '../src/components/NewBox';
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations';
 import {PostArea} from '../src/components/PostArea';
-import { AlurakutMenu, AlurakutProfileSidebarMenuDefault, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons';
-
+import { AlurakutMenu, AlurakutProfileSidebarMenuDefault } from '../src/lib/AlurakutCommons';
+import {AsideBox} from '../src/components/AsideBox'
 
 
 
 function ProfileSidebar(propriedades) {
   return (
-    <Box as="aside">
+    <AsideBox as="aside">
       <img src={`https://github.com/${propriedades.githubUser}.png`} style={{ borderRadius: '8px' }} />
       <hr />
       <p>
@@ -23,7 +23,7 @@ function ProfileSidebar(propriedades) {
       <hr />
 
       <AlurakutProfileSidebarMenuDefault />
-    </Box>
+    </AsideBox>
   )
 }
 
@@ -52,12 +52,12 @@ function ProfileRelationsBox(propriedades) {
 export default function Home(props) {
   const usuarioAleatorio = props.githubUser;
   const pessoasFavoritas = [
-    'mateushenrique-dev',
-    'ikyrie',
-    'Garoze',
+    'peas',
+    'omariosouto',
+    'juunegreiros',
+    'guilhermesilveira',
     'rafaballerini',
-    'leonardonegrao',
-    'Eddart157'
+    'SchultzGabriel'
   ]
   
 
@@ -75,11 +75,12 @@ export default function Home(props) {
     })
   }, [])
 
-  //  API GraphQL
+  //  Optei por não usar o DatoCMS no projeto final pois seu uso excede o limite de tráfego de dados da versão grátis muito rápido e o site quebra.
+
   //  fetch('https://graphql.datocms.com/', {
   //   method: 'POST',
   //   headers: {
-  //     'Authorization': '9bcb177f6095be872305166c56b04b',
+  //     'Authorization': 'xxx',
   //     'Content-Type': 'application/json',
   //     'Accept': 'application/json',
   //   },
@@ -118,8 +119,7 @@ export default function Home(props) {
             <h1 className="title">
               Bem vindo(a) {usuarioAleatorio}!
             </h1>
-
-            <OrkutNostalgicIconSet />
+          <p>Essa plataforma foi pensada para guardar dicas e métodos de estudo que podem ser valiosas na nossa jornada de desenvolvedor. Seja um site interessante, um método ou apenas uma imagem que você ache interessante de se estudar, sinta-se a vontade para compartilhar com a comunidade.</p>
           </Box>
           <Box>
             <h2 className="subTitle">Que tal contribuir com um post? :)</h2>
@@ -145,7 +145,7 @@ export default function Home(props) {
                   const post = dados.registroCriado;
                   const postsAtualizados = [...posts, post];
                   setPosts(postsAtualizados)
-                  alert('Obrigado pela sua contribuição! Os moderadores já estão analizando seu post.')
+                  alert('Obrigado pela sua contribuição! Os moderadores já estão analizando seu post. Equanto isso, vizualize como ele aparecerá na área de posts.')
                 })
             }}>
               <div>
@@ -239,7 +239,7 @@ export default function Home(props) {
 
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
-              Pessoas da comunidade ({pessoasFavoritas.length})
+              Alura no GitHub
             </h2>
             <ul>
               {pessoasFavoritas.slice(0,6).map((itemAtual) => {
